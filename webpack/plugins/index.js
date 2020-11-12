@@ -6,15 +6,22 @@ const fs = require("fs");
 const PATHS = require("../global");
 
 const PAGES_DIR = `${PATHS.src}/pages`;
+const PAGES = fs
+  .readdirSync(PAGES_DIR)
+  .filter((fileName) => fileName.endsWith(".pug"));
 
 const plugins = [
   new CleanWebpackPlugin(),
   new MiniCssExtractPlugin({
     filename: "style.css",
   }),
-  new HtmlWebpackPlugin({
-    template: `${PAGES_DIR}/index.pug`,
-  }),
+  ...PAGES.map(
+    (page) =>
+      new HtmlWebpackPlugin({
+        template: `${PAGES_DIR}/${page}`,
+        minify: false,
+      })
+  ),
 ];
 
 module.exports = plugins;
