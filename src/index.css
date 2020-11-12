@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import-glob "components/**/*.css";
 
 body {
